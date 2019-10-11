@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/trainingListFragment">
+
+    <fragment
+        android:id="@+id/trainingListFragment"
+        android:name="com.galinc.hardtraining2.ui.fragment.TrainingListFragment"
+        android:label="training_list_fragment"
+        tools:layout="@layout/training_list_fragment" >
+        <action
+            android:id="@+id/action_trainingListFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.galinc.hardtraining2.ui.fragment.TrainingFragment"
+        android:label="training_fragment"
+        tools:layout="@layout/training_fragment" />
+</navigation>
