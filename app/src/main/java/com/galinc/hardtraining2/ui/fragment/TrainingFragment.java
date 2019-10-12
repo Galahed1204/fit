@@ -31,6 +31,6 @@ public class TrainingFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tvInfo.setText(getArguments().getString("key"));
+        //tvInfo.setText(getArguments().getString("key"));
     }
 }

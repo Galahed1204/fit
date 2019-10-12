@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">HardTraining2</string>
+    <string name="error_message">Error occurred while getting request!</string>
+    <string name="title_activity_list_trainings">Тренировки</string>
+    <string name="button_download">Download directory</string>
+    <string name="go_to_documents">Go to documents</string>
+    <string name="title_activity_list_training">Упражнения</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+    </string>
+    <string name="action_settings">Настройки</string>
+    <string name="exercise_string">Упражнение: %1$s</string>
+    <string name="itr_string">Количество повторений: %1$d</string>
+    <string name="weight_string">Вес: %1$s</string>
+    <string name="new_document">Новый документ</string>
 </resources>
