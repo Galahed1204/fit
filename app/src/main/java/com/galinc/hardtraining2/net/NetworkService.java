@@ -36,5 +36,8 @@ public class NetworkService {
         return mInstance;
     }
 
+    public JSONPlaceHolderApi getJSONApi() {
+        return mRetrofit.create(JSONPlaceHolderApi.class);
+    }
 
 }

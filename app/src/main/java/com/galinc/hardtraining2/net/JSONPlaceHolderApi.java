@@ -2,6 +2,7 @@ package com.galinc.hardtraining2.net;
 
 import com.galinc.hardtraining2.db.itility.Document;
 import com.galinc.hardtraining2.db.itility.Exercise;
+import com.galinc.hardtraining2.db.itility.TemplateTraining;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface JSONPlaceHolderApi {
     @POST("/hardtraining/hs/ht/main/call/")
     public Call<List<Document>> postDocuments(@Body String data);
 
-//    @POST("/hardtraining/hs/ht/main/call/")
-//    public Call<List<TemplateTraining>> postTemplate(@Body String data);
+    @POST("/hardtraining/hs/ht/main/call/")
+    public Call<List<TemplateTraining>> postTemplate(@Body String data);
 
 }
