@@ -32,7 +32,7 @@ import retrofit2.Response;
  */
 public class DownloadFragment extends Fragment {
 
-    private AppDatabase mDataBase;
+    private AppDatabase mDataBase = MyApp.getInstance().getDatabase();
 
     public DownloadFragment() {
         // Required empty public constructor
@@ -46,7 +46,7 @@ public class DownloadFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_download, container, false);
         Button buttonDownloadExercise = v.findViewById(R.id.button_download_exercise);
         buttonDownloadExercise.setOnClickListener(v1 -> {
-            mDataBase = MyApp.getInstance().getDatabase();
+            //mDataBase ;
             NetworkService.getInstance().
                     getJSONApi()
                     .postData(NetworkService.GET_EXERCISES)

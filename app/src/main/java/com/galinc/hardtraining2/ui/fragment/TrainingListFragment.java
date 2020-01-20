@@ -1,6 +1,7 @@
 package com.galinc.hardtraining2.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -21,6 +23,7 @@ import com.galinc.hardtraining2.net.NetworkService;
 import com.galinc.hardtraining2.ui.MainActivity;
 import com.galinc.hardtraining2.ui.adapter.DataAdapterDocument;
 import com.galinc.hardtraining2.ui.adapter.RecyclerViewClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -62,42 +65,51 @@ public class TrainingListFragment extends Fragment {
         RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
             Bundle myBundle = new Bundle();
-            myBundle.putInt("positionOfDocument", position);
-            ((MainActivity) Objects.requireNonNull(getActivity())).getNavController().navigate(R.id.action_trainingListFragment_to_trainingFragment,myBundle);
+            myBundle.putInt("positionOfDocument", ++position);
+            Navigation.findNavController(getView()).navigate(R.id.action_trainingListFragment_to_trainingFragment,myBundle);
         };
         mDataBase.documentDao().getAllLiveData().observe(this,documents1 ->
                 recyclerView.setAdapter(new DataAdapterDocument(getLayoutInflater(), documents1,listener)));
 
         mSwipeRefreshLayout = getView().findViewById(R.id.swipe_container);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            NetworkService
-                    .getInstance()
-                    .getJSONApi()
-                    .postDocuments(NetworkService.GET_LISTOFTRAININGS)
-                    .enqueue(new Callback<List<Document>>() {
-                        @Override
-                        public void onResponse(Call<List<Document>> call, Response<List<Document>> response) {
-                            List<Document> post = response.body();
-                            if (post != null){
-                                Completable.fromAction(() -> {
-                                    mDataBase.documentDao().deleteAll();
-                                    mDataBase.documentDao().insert(post);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> NetworkService
+                .getInstance()
+                .getJSONApi()
+                .postDocuments(NetworkService.GET_LISTOFTRAININGS)
+                .enqueue(new Callback<List<Document>>() {
+                    @Override
+                    public void onResponse(Call<List<Document>> call, Response<List<Document>> response) {
+                        List<Document> post = response.body();
+                        if (post != null){
+                            Completable.fromAction(() -> {
 
-                                }).subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe();
+                                mDataBase.documentDao().deleteAll();
+                                mDataBase.documentDao().insert(post);
+                                Log.d("test1","Загрузился список упражнений");
+                                //TODO make toast
 
-                            }
-                            mSwipeRefreshLayout.setRefreshing(false);
+                            }).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe();
+
                         }
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
 
-                        @Override
-                        public void onFailure(Call<List<Document>> call, Throwable t) {
-                            Snackbar.make(getView().findViewById(R.id.swipe_container), t.toString(), Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    });
+                    @Override
+                    public void onFailure(Call<List<Document>> call, Throwable t) {
+                        Snackbar.make(getView().findViewById(R.id.swipe_container), t.toString(), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        Log.d("test1","Не загрузился список упражнений");
+
+                    }
+                }));
+
+        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            Log.d("test1","Нажата кнопка добавления");
+            Navigation.findNavController(getView()).navigate(R.id.action_nav_document_to_newTrainingFragment);
         });
 
     }

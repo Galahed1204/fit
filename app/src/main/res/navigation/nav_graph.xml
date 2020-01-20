@@ -12,19 +12,24 @@
         tools:layout="@layout/training_list_fragment" >
         <action
             android:id="@+id/action_trainingListFragment_to_trainingFragment"
-            app:destination="@id/trainingFragment" />
+            app:destination="@id/nav_trainingFragment" />
         <action
-            android:id="@+id/action_trainingListFragment_to_downloadFragment"
-            app:destination="@id/nav_setting" />
+            android:id="@+id/action_nav_document_to_newTrainingFragment"
+            app:destination="@id/newTrainingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/trainingFragment"
+        android:id="@+id/nav_trainingFragment"
         android:name="com.galinc.hardtraining2.ui.fragment.TrainingFragment"
-        android:label="training_fragment"
+        android:label="@string/title_activity_list_training"
         tools:layout="@layout/training_fragment" />
     <fragment
         android:id="@+id/nav_setting"
         android:name="com.galinc.hardtraining2.ui.fragment.DownloadFragment"
         android:label="@string/action_settings"
         tools:layout="@layout/fragment_download" />
+    <fragment
+        android:id="@+id/newTrainingFragment"
+        android:name="com.galinc.hardtraining2.ui.fragment.NewTrainingFragment"
+        android:label="@string/title_activity_new_training"
+        tools:layout="@layout/new_training_fragment" />
 </navigation>

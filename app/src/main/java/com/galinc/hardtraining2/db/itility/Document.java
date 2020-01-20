@@ -7,6 +7,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.galinc.hardtraining2.db.convert.ListTrainingsConverter;
+
 import java.util.List;
 
 @Entity
@@ -22,8 +24,8 @@ public class Document {
 
     private String date;
 
-//    @TypeConverters({ListTrainingsConverter.class})
-//    public List<ListTraining> listTrainings;
+    @TypeConverters({ListTrainingsConverter.class})
+    public List<ListTraining> listTrainings;
 
     private String kindOfTrainings;
 
