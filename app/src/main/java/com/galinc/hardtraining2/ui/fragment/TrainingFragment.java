@@ -45,6 +45,7 @@ public class TrainingFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final RecyclerView recyclerView = getView().findViewById(R.id.listlt);
         final int positionOfDocument = getArguments().getInt("positionOfDocument",0);
+        final String guidOfDocument = getArguments().getString("guidOfDocument","");
 
         RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
@@ -53,7 +54,7 @@ public class TrainingFragment extends Fragment {
 //            Navigation.findNavController(getView()).navigate(R.id.action_trainingListFragment_to_trainingFragment,myBundle);
         };
 
-        mDataBase.documentDao().getByIdLiveData(positionOfDocument).observe(this, document ->{
+        mDataBase.documentDao().getByGuidLiveData(guidOfDocument).observe(this, document ->{
                     if (document.listTrainings != null) recyclerView.setAdapter(new DataAdapterTraining(getLayoutInflater(), document.listTrainings,listener));
                 }
                 );

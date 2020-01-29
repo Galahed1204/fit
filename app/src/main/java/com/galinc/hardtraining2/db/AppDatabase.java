@@ -1,5 +1,6 @@
 package com.galinc.hardtraining2.db;
 
+
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 

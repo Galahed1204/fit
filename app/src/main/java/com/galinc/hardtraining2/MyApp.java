@@ -3,9 +3,13 @@ package com.galinc.hardtraining2;
 import android.app.Application;
 //import android.arch.persistence.room.Room;
 
+//import androidx.room.Room;
+
 import androidx.room.Room;
 
 import com.galinc.hardtraining2.db.AppDatabase;
+
+//import com.galinc.hardtraining2.db.AppDatabase;
 
 public class MyApp extends Application {
     public static MyApp instance;

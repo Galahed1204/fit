@@ -22,6 +22,7 @@ import com.galinc.hardtraining2.db.itility.Document;
 import com.galinc.hardtraining2.net.NetworkService;
 import com.galinc.hardtraining2.ui.MainActivity;
 import com.galinc.hardtraining2.ui.adapter.DataAdapterDocument;
+import com.galinc.hardtraining2.ui.adapter.DataAdapterTraining;
 import com.galinc.hardtraining2.ui.adapter.RecyclerViewClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -65,7 +66,9 @@ public class TrainingListFragment extends Fragment {
         RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
             Bundle myBundle = new Bundle();
-            myBundle.putInt("positionOfDocument", ++position);
+            myBundle.putInt("positionOfDocument", position);
+            myBundle.putString("guidOfDocument",((DataAdapterDocument)recyclerView.getAdapter()).getDocuments().get(position).getGuid());
+//            ((DataAdapterDocument)recyclerView.getAdapter()).getDocuments().get(position);
             Navigation.findNavController(getView()).navigate(R.id.action_trainingListFragment_to_trainingFragment,myBundle);
         };
         mDataBase.documentDao().getAllLiveData().observe(this,documents1 ->

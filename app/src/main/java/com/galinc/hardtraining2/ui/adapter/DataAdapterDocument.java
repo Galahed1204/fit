@@ -19,6 +19,10 @@ public class DataAdapterDocument extends RecyclerView.Adapter<DataAdapterDocumen
     private List<Document> documents;
     private RecyclerViewClickListener mListener;
 
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
     public DataAdapterDocument(LayoutInflater inflater, List<Document> documents, RecyclerViewClickListener mListener) {
         this.inflater = inflater;
         this.documents = documents;

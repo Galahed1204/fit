@@ -1,6 +1,9 @@
 package com.galinc.hardtraining2.db.itility;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -11,7 +14,7 @@ import com.google.gson.annotations.Expose;
 import io.reactivex.annotations.NonNull;
 
 @Entity
-public class ListTraining {
+public class ListTraining{
 
     @PrimaryKey(autoGenerate = true)
     public long id;
@@ -86,4 +89,5 @@ public class ListTraining {
     public String getGuid() {
         return guid;
     }
+
 }

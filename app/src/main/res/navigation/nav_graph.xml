@@ -31,5 +31,14 @@
         android:id="@+id/newTrainingFragment"
         android:name="com.galinc.hardtraining2.ui.fragment.NewTrainingFragment"
         android:label="@string/title_activity_new_training"
-        tools:layout="@layout/new_training_fragment" />
+        tools:layout="@layout/new_training_fragment" >
+        <action
+            android:id="@+id/action_newTrainingFragment_to_newTrainingEditExFragment"
+            app:destination="@id/newTrainingEditExFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTrainingEditExFragment"
+        android:name="com.galinc.hardtraining2.ui.fragment.NewTrainingEditExFragment"
+        android:label="new_training_edit_fragment"
+        tools:layout="@layout/new_training_edit_fragment" />
 </navigation>

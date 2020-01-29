@@ -19,6 +19,10 @@ public class DataAdapterTraining extends RecyclerView.Adapter<DataAdapterTrainin
     private List<ListTraining> trainings;
     private RecyclerViewClickListener mListener;
 
+    public List<ListTraining> getTrainings() {
+        return trainings;
+    }
+
     @NonNull
     @Override
     public DataAdapterTraining.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

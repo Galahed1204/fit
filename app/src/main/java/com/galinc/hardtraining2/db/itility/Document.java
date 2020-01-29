@@ -3,6 +3,7 @@ package com.galinc.hardtraining2.db.itility;
 
 
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -14,20 +15,32 @@ import java.util.List;
 @Entity
 public class Document {
 
-    @PrimaryKey(autoGenerate = true)
+    //@PrimaryKey(autoGenerate = true)
     public long id;
 
 
     private String number;
 
-    private String guid;
+    @PrimaryKey
+    @NonNull
+    private String guid = "";
 
     private String date;
+
+    private String kindOfTrainings;
 
     @TypeConverters({ListTrainingsConverter.class})
     public List<ListTraining> listTrainings;
 
-    private String kindOfTrainings;
+
+    public List<ListTraining> getListTrainings() {
+        return listTrainings;
+    }
+
+    public void setListTrainings(List<ListTraining> listTrainings) {
+        this.listTrainings = listTrainings;
+    }
+
 
     public String getKindOfTrainings() {
         return kindOfTrainings;
