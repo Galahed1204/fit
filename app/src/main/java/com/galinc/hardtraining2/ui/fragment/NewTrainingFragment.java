@@ -45,6 +45,7 @@ public class NewTrainingFragment extends Fragment {
     }
     private RecyclerView recyclerView ;
     public static final String NEW_GUID = "new_document";
+    private boolean fromEditText;
 
 
 
@@ -60,20 +61,37 @@ public class NewTrainingFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(NewTrainingViewModel.class);
         // TODO: Use the ViewModel
-
+        if (getArguments() != null){
+            fromEditText = getArguments().getBoolean("fromEditText");
+        }
         RecyclerViewClickListener listener = (view, position) -> {
             Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_SHORT).show();
             Bundle myBundle = new Bundle();
-            myBundle.putInt("positionOfNewExercise", ++position);
-
-//            myBundle.putParcelableArrayList ("list", ((DataAdapterTraining)this.recyclerView.getAdapter()).getTrainings());
+            myBundle.putInt("positionOfNewExercise", position);
             Navigation.findNavController(getView()).navigate(R.id.action_newTrainingFragment_to_newTrainingEditExFragment,myBundle);
         };
 
         recyclerView = getView().findViewById(R.id.newTrainingList);
-
         nameOfTraining = getView().findViewById(R.id.nameOfTraining);
 
+        if (fromEditText){
+            mDataBase.documentDao().getByGuidLiveData(NEW_GUID).observe(this,document -> {
+                recyclerView.setAdapter(new DataAdapterTraining(getLayoutInflater(), document.listTrainings,listener));
+                nameOfTraining.setText(document.getKindOfTrainings());
+            });
+        }else {
+            makeNewDocumentFromTemplate(listener);
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+//        listDocuments.dispose();
+        super.onDestroy();
+    }
+
+    public void makeNewDocumentFromTemplate(RecyclerViewClickListener listener){
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
 
         listDocuments = Completable
@@ -98,22 +116,26 @@ public class NewTrainingFragment extends Fragment {
                                     Document document = new Document();
                                     document.setGuid(NEW_GUID);
                                     document.setListTrainings(templateTraining.listTrainings);
-                                    mDataBase.documentDao().insertCompletable(document).subscribe(new CompletableObserver() {
-                                        @Override
-                                        public void onSubscribe(Disposable d) {
+                                    document.setKindOfTrainings(templateTraining.getName());
+                                    mDataBase.documentDao().insertCompletable(document)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new CompletableObserver() {
+                                                @Override
+                                                public void onSubscribe(Disposable d) {
 
-                                        }
+                                                }
 
-                                        @Override
-                                        public void onComplete() {
+                                                @Override
+                                                public void onComplete() {
+                                                    Log.d("test1","Запись в БД прошла успешно");
+                                                }
 
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            Log.d("test1","Ошибка записи в БД");
-                                        }
-                                    });
+                                                @Override
+                                                public void onError(Throwable e) {
+                                                    Log.d("test1","Ошибка записи в БД");
+                                                }
+                                            });
 
                                 });
                             })
@@ -124,14 +146,6 @@ public class NewTrainingFragment extends Fragment {
                     AlertDialog alert = builder.create();
                     alert.show();
                 });
-
-
-    }
-
-    @Override
-    public void onDestroy() {
-        listDocuments.dispose();
-        super.onDestroy();
     }
 
 

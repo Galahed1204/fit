@@ -27,8 +27,17 @@ public class MainActivity extends AppCompatActivity  {//implements NavigationVie
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        //navController.getCurrentDestination().
+        if (navController.popBackStack(R.id.newTrainingEditExFragment,true)){
+            navController.navigate(R.id.nav_document);
+        }
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

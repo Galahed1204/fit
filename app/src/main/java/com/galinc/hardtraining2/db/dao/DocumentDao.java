@@ -30,7 +30,7 @@ public interface DocumentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Document document);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertCompletable(Document document);
 
     @Insert

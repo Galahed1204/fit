@@ -39,6 +39,6 @@
     <fragment
         android:id="@+id/newTrainingEditExFragment"
         android:name="com.galinc.hardtraining2.ui.fragment.NewTrainingEditExFragment"
-        android:label="new_training_edit_fragment"
+        android:label="@string/title_activity_new_training_edit"
         tools:layout="@layout/new_training_edit_fragment" />
 </navigation>
